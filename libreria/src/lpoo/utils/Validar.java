@@ -1,8 +1,20 @@
 package lpoo.utils;
 import java.util.Scanner;
+import java.text.Normalizer;
 
 public class Validar{
         
+
+public static String normalName(String texto) {
+    if (texto == null) return null;
+
+    String temp = Normalizer.normalize(texto, Normalizer.Form.NFD);
+    temp = temp.replaceAll("\\p{M}", ""); 
+
+    temp = temp.toUpperCase();
+
+    return temp.trim();
+}
     private static boolean validar_entero(String numero){
         try{
             Integer.parseInt(numero);
@@ -25,7 +37,18 @@ public class Validar{
         System.out.println(mensaje);
     }
 
-    public static String leer_string(String mensaje){
+    public static boolean validar_long_str(String texto, int min_long, int max_long, boolean es_numerico){//si es numerico se selecciona true para eliminar espacios dentro del numero
+        if(texto == null) return false;
+        
+        if(es_numerico){
+            texto = texto.replace(" ", "");
+            if(!texto.matches("\\d+")) return false;
+        }
+
+        return texto.length() >= min_long && texto.length() <= max_long;
+    }
+
+    public static String leer_string(String mensaje, int min_caracteres, int max_caracteres, boolean es_numerico){
         Scanner sc = new Scanner(System.in);
         String entrada;
 
@@ -37,9 +60,33 @@ public class Validar{
                 print("\n**La entrada no puede estar vacia. Intente nuevamente...**");
                 continue;
             }
+
+
+            if(!validar_long_str(entrada, min_caracteres, max_caracteres, es_numerico)){
+                print("\n**Porfavor introduzca una entrada con los caracteres validos entre " + min_caracteres + " y " + max_caracteres + (es_numerico ? " y solo numeros": "") + "**");
+                continue;
+            }
+            
             break;
         }
+        if(es_numerico) return entrada.replace(" ", "");
         return entrada;
+    }
+
+    public static void validarName(String nombre, int minLong, int maxLong) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("**La entrada no puede ser nula ni vacia**");
+        }
+
+        String temp = nombre.trim();
+
+        if (temp.length() < minLong || temp.length() > maxLong) {
+            throw new IllegalArgumentException("**El nombre debe tener entre " + minLong + " y " + maxLong + " caracteres**");
+        }
+
+        if (!temp.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+")) {
+            throw new IllegalArgumentException("**El nombre contiene caracteres invalidos**");
+        }
     }
 
     public static int leer_entero(String mensaje, int min, int max){
@@ -47,7 +94,7 @@ public class Validar{
         int salida;
 
         while(true){
-            entrada = leer_string(mensaje);
+            entrada = leer_string(mensaje, 1, 10, true);
 
             if(!validar_entero(entrada)){
                 print("\n**Ingrese un numero entero. Intente nuevamente...**");
@@ -57,7 +104,7 @@ public class Validar{
             salida = Integer.parseInt(entrada);
 
             if(salida < min || salida > max){
-                print("\n**Ingrese un numero dentro dl rango: " + min + " <= numero <= " + max);
+                print("\n**Ingrese un numero dentro del rango: " + min + " <= numero <= " + max);
                 continue;
             }
 
@@ -70,7 +117,7 @@ public class Validar{
         double salida;
 
         while(true){
-            entrada = leer_string(mensaje);
+            entrada = leer_string(mensaje,1 , 40, true);
 
             if(!validar_flotante(entrada)){
                 print("\n**Ingrese un numero flotante. Intente nuevamente...**");
@@ -103,7 +150,7 @@ public class Validar{
     public static boolean validar_sn(String mensaje){
         String entrada;
         while(true){
-            entrada = leer_string(mensaje + "(s/n): ").toLowerCase();
+            entrada = leer_string(mensaje + "(s/n): ", 1, 2, false).toLowerCase();
             if(entrada.equals("s")){return true;}
             else if(entrada.equals("n")){return false;}
             else{print("\n**Ingresa (s/n) para confirmar o negar please...**");continue;}
@@ -122,7 +169,7 @@ public class Validar{
                 print("\n- " + opcion);
             }
 
-            String entrada = leer_string("\nIngresa tu elección: ").toUpperCase();
+            String entrada = leer_string("\nIngresa tu elección: ", 1, 256, false).toUpperCase();
 
             try {
                 resultado = Enum.valueOf(enumClass, entrada);

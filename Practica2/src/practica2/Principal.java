@@ -35,14 +35,14 @@ public class Principal{
             case 1->{
                 cleaner();
                     if(validar_sn("\nTienes los 5 datos del estudiante?")){
-                        String nombre = leer_string("\nIntroduzca el nombre del estudiante: ");
+                        String nombre = leer_string("\nIntroduzca el nombre del estudiante: ", 3, 256, false);
                         int matricula = leer_entero("Introduzca la matricula del estudiante: ", 1, Integer.MAX_VALUE);
                         int edad = leer_entero("Introduzca la edad del estudiante: ", 12, 70);
                         Carrera carrera = leer_enum("\nSelecciona una carrera: ", Carrera.class );
                         int semestre = leer_entero("\nIntroduzca el semestre actual del estudiante: ", 1, 10);
                         estudiante = new EstudianteLS(nombre, matricula, edad, carrera, semestre);
                     }else{
-                        String nombre = leer_string("\nIntroduzca el nombre del estudiante: ");
+                        String nombre = leer_string("\nIntroduzca el nombre del estudiante: ", 3, 256, false);
                         int matricula = leer_entero("Introduzca la matricula del estudiante: ", 1, Integer.MAX_VALUE);
                         if(validar_sn("Tienes la edad del estudiante?")){
                             int edad = leer_entero("Introduzca la edad del estudiante: ", 12, 70);
@@ -60,7 +60,7 @@ public class Principal{
                 case 2->{
                     cleaner();
                     print("\n**Buscando estudiante...**");
-                    uanl.buscarEstudiante(leer_string("Introduzca nombre/matricula del estudiante: "));
+                    uanl.buscarEstudiante(leer_string("Introduzca nombre/matricula del estudiante: ", 3, 256, false));
                     pausar();
 
                 }
