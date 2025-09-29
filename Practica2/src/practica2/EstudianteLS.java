@@ -11,35 +11,66 @@ enum Carrera{
 
 public class EstudianteLS{
     private String nombre;
-    private int matricula;
+    private String matricula;
     private int edad;
     private Carrera carrera;
     private int semestreActual;
 
-    public EstudianteLS(String nombre, int matricula, int edad, Carrera carrera, int semestreActual){
-        this.nombre = nombre;
-        this.matricula = matricula;
-        this.edad = edad;
-        this.carrera = carrera;
-        this.semestreActual = semestreActual;
+    public EstudianteLS(String nombre, String matricula, int edad, String carrera, int semestreActual){
+        setNombre(nombre);
+        setMatricula(matricula);
+        setEdad(edad);
+        setCarrera(carrera);
+        setSemestre(semestreActual);
     }
 
-    public EstudianteLS(String nombre, int matricula){
-        this.nombre = nombre;
-        this.matricula = matricula;
+    public EstudianteLS(String nombre,String matricula){
+        setMatricula(matricula);
+        setNombre(nombre);
     }
 
-    public EstudianteLS(String nombre, int matricula, int edad){
+    public EstudianteLS(String nombre, String matricula, int edad){
         this(nombre, matricula);
         this.edad = edad;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = validarName(nombre,2, 256);
+    }
+    public void setEdad(int edad){
+        if (edad < 15 || edad > 45) {
+            throw new IllegalArgumentException("**Edad invalida: por politicas de la universidad debe estar entre 15 y 45 years**");
+        }
+        this.edad = edad;
+    }
+    public void setMatricula(String matricula){
+        if(validar_long_str(matricula, 1, 256, true))
+            this.matricula = matricula; 
+        else{
+            print("**Matricula invalida*");
+        }
+    }
+
+    public void setCarrera(String carreraStr) {
+        try {
+            Carrera resultado = Carrera.valueOf(carreraStr.toUpperCase()); 
+            this.carrera = resultado;
+        } catch (IllegalArgumentException e) {
+            print("\n**Opcion invalida. Intente de nuevo.**");
+        }
+    }
+    public void setSemestre(int semestre){
+        if (semestre <= 0 || semestre > 10) {
+            throw new IllegalArgumentException("\n**Solo hay 10 semestres del 1ro al 10mo**");
+        }
+        this.semestreActual = semestre;
+    }
     public void avanzarSemestre(){
         this.semestreActual++;
     }
 
-    public void cambiarCarrera(Carrera nuevaCarrera){
-        this.carrera = nuevaCarrera;
+    public void cambiarCarrera(String nuevaCarrera){
+        setCarrera(nuevaCarrera);
     }
 
     public void cumplirYears(){
@@ -55,7 +86,7 @@ public class EstudianteLS{
         print("Semestre en curso: " + this.semestreActual);
     }
 
-    public int getMatricula(){
+    public String getMatricula(){
         return this.matricula;
     }
     

@@ -73,8 +73,8 @@ public static String normalName(String texto) {
         return entrada;
     }
 
-    public static void validarName(String nombre, int minLong, int maxLong) {
-        if (nombre == null || nombre.trim().isEmpty()) {
+    public static String validarName(String nombre, int minLong, int maxLong) {
+        if (nombre == null || nombre.trim().isBlank()) {
             throw new IllegalArgumentException("**La entrada no puede ser nula ni vacia**");
         }
 
@@ -87,6 +87,7 @@ public static String normalName(String texto) {
         if (!temp.matches("[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ ]+")) {
             throw new IllegalArgumentException("**El nombre contiene caracteres invalidos**");
         }
+        return nombre;
     }
 
     public static int leer_entero(String mensaje, int min, int max){
@@ -112,7 +113,7 @@ public static String normalName(String texto) {
         }
     }
 
-    public static double leer_floante(String mensaje, double min, double max){
+    public static double leer_flotante(String mensaje, double min, double max){
         String entrada;
         double salida;
 
@@ -186,15 +187,11 @@ public static String normalName(String texto) {
             String os = System.getProperty("os.name").toLowerCase();
 
             if (os.contains("windows")) {
-                // Ejecuta cls en Windows
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
             } else {
-                // Linux o macOS
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+                new ProcessBuilder("clear").inheritIO().start().waitFor();
             }
         } catch (Exception e) {
-            // En caso de error, solo imprime muchas líneas
             for (int i = 0; i < 50; i++) System.out.println();
         }
     }
@@ -202,7 +199,7 @@ public static String normalName(String texto) {
     public static void pausar() {
         System.out.print("\nPresiona Enter para continuar...");
         Scanner sc = new Scanner(System.in);
-        sc.nextLine();  // Espera a que el usuario presione Enter
+        sc.nextLine();  
     }
 
 }

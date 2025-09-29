@@ -7,11 +7,11 @@ public class Principal{
     public static void main(String[] args){
         Universidad7528 uanl = new Universidad7528();
 
-        EstudianteLS e1 = new EstudianteLS("Luis Segobia", 75281, 20, Carrera.LCC, 5);
-        EstudianteLS e2 = new EstudianteLS("Claudia Sehinbaum", 75282);
-        EstudianteLS e3 = new EstudianteLS("Jose Cuervo", 75283, 21);
-        EstudianteLS e4 = new EstudianteLS("Aldo Adrian", 75284, 22, Carrera.MATEMATICAS, 9);
-        EstudianteLS e5 = new EstudianteLS("Fernando Valenzuela", 75285);
+        EstudianteLS e1 = new EstudianteLS("Luis Segobia", "75281", 20, "LCC", 5);
+        EstudianteLS e2 = new EstudianteLS("Claudia Sehinbaum", "75282");
+        EstudianteLS e3 = new EstudianteLS("Jose Cuervo", "75283", 21);
+        EstudianteLS e4 = new EstudianteLS("Aldo Adrian", "75284", 22, "MATEMATICAS", 9);
+        EstudianteLS e5 = new EstudianteLS("Fernando Valenzuela", "75285");
        
         uanl.agregarEstudiante(e1);
         uanl.agregarEstudiante(e2);
@@ -36,14 +36,14 @@ public class Principal{
                 cleaner();
                     if(validar_sn("\nTienes los 5 datos del estudiante?")){
                         String nombre = leer_string("\nIntroduzca el nombre del estudiante: ", 3, 256, false);
-                        int matricula = leer_entero("Introduzca la matricula del estudiante: ", 1, Integer.MAX_VALUE);
-                        int edad = leer_entero("Introduzca la edad del estudiante: ", 12, 70);
-                        Carrera carrera = leer_enum("\nSelecciona una carrera: ", Carrera.class );
+                        String matricula = leer_string("Introduzca la matricula del estudiante: ", 1, 256, true);
+                        int edad = leer_entero("Introduzca la edad del estudiante: ", 15, 45);
+                        String carrera = leer_enum("\nSelecciona una carrera: ", Carrera.class ).name();
                         int semestre = leer_entero("\nIntroduzca el semestre actual del estudiante: ", 1, 10);
                         estudiante = new EstudianteLS(nombre, matricula, edad, carrera, semestre);
                     }else{
                         String nombre = leer_string("\nIntroduzca el nombre del estudiante: ", 3, 256, false);
-                        int matricula = leer_entero("Introduzca la matricula del estudiante: ", 1, Integer.MAX_VALUE);
+                        String matricula = leer_string("Introduzca la matricula del estudiante: ", 1, 256, true);
                         if(validar_sn("Tienes la edad del estudiante?")){
                             int edad = leer_entero("Introduzca la edad del estudiante: ", 12, 70);
                             estudiante = new EstudianteLS(nombre, matricula, edad);

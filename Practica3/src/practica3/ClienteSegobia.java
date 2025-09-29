@@ -23,8 +23,7 @@ public class ClienteSegobia{
     //setters
 
     public void setNombre(String nombre) {
-        validarName(nombre, 2, 50);
-        this.nombre = normalName(nombre);
+        this.nombre = validarName(nombre,2, 256);
     }
     public void setEdad(int edad){
         if (edad < 18 || edad > 75) {
