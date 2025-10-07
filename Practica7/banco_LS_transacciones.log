@@ -1,0 +1,27 @@
+Oct 04, 2025 2:27:43 PM practica7.SistemaBancoLS <clinit>
+INFO: --- Logger de Practica 7 listo para registrar errores. ---
+Oct 04, 2025 2:27:43 PM practica7.SistemaBancoLS probarOperaciones
+WARNING: ERROR DE TRANSACCION
+practica7.Saldo10InsuficienteException: Fondos insuficientes. Intento de retiro de 1000.0. Tienes un saldo actual de 500.0.
+	at practica7.SistemaBancoLS.retiro(SistemaBancoLS.java:58)
+	at practica7.SistemaBancoLS.probarOperaciones(SistemaBancoLS.java:68)
+	at practica7.SistemaBancoLS.main(SistemaBancoLS.java:100)
+
+Oct 04, 2025 2:27:43 PM practica7.SistemaBancoLS probarOperaciones
+WARNING: ERROR DE FORMATO
+practica7.Matricula14InvalidaException: Matricula 1B567 invalida. Ingresa una matricula valida (ej. 2177528)
+	at practica7.SistemaBancoLS.retiro(SistemaBancoLS.java:43)
+	at practica7.SistemaBancoLS.probarOperaciones(SistemaBancoLS.java:78)
+	at practica7.SistemaBancoLS.main(SistemaBancoLS.java:100)
+
+Oct 04, 2025 2:27:43 PM practica7.SistemaBancoLS probarOperaciones
+WARNING: ERROR DE CAPA 8
+practica7.Usuario7528NoEncontradoException: Usuario con matricula 9637418 no encontrado en la base de datos.
+	at practica7.SistemaBancoLS.retiro(SistemaBancoLS.java:54)
+	at practica7.SistemaBancoLS.probarOperaciones(SistemaBancoLS.java:88)
+	at practica7.SistemaBancoLS.main(SistemaBancoLS.java:100)
+
+Oct 04, 2025 2:27:44 PM practica7.SistemaBancoLS <clinit>
+INFO: --- Logger de Practica 7 listo para registrar errores. ---
+Oct 04, 2025 2:27:44 PM practica7.SistemaBancoLS retiro
+INFO: Retiro exitoso. Matricula: 1234567, Monto: 500. Saldo actual de: 1,000

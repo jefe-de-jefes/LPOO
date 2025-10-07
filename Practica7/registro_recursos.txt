@@ -1,0 +1,2 @@
+Prueba de inicio de cierre automático.
+Fin de la prueba.

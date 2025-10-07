@@ -17,7 +17,7 @@ public class Main {
 
         if (f instanceof CirculoSegobia) {
             CirculoSegobia c = (CirculoSegobia) f;
-            print("\nSe detectó un círculo");
+            print("\nSe detectó un círculo con radio: " + c.getRadio());
             f.dibujar();
         }
 
