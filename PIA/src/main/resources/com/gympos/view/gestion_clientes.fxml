@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.gympos.controller.GestionClientesController"
+            styleClass="root" stylesheets="@../css/app.css">
+    
+    <top>
+        <HBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
+            <Button text="&lt; Volver al Dashboard" onAction="#goToDashboard"/>
+            <Label text="Gestión de Clientes" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="10" style="-fx-padding: 10;">
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="Buscar Cliente:" styleClass="field-label"/>
+                <TextField fx:id="searchField" promptText="Escribe ID o Nombre..." styleClass="input" HBox.hgrow="ALWAYS"/>
+            </HBox>
+
+            <TableView fx:id="clientTable" VBox.vgrow="ALWAYS">
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                </columnResizePolicy>
+                <columns>
+                    <TableColumn text="ID" fx:id="colId" minWidth="50" maxWidth="80"/>
+                    <TableColumn text="Nombre Completo" fx:id="colFullName" minWidth="150"/>
+                    <TableColumn text="Email" fx:id="colEmail" minWidth="150"/>
+                    <TableColumn text="Teléfono" fx:id="colPhone" minWidth="100"/>
+                    <TableColumn text="Vencimiento" fx:id="colExpiry" minWidth="100"/>
+                    <TableColumn text="Estatus" fx:id="colStatus" minWidth="90" maxWidth="120"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+    <right>
+        <ScrollPane fitToWidth="true" styleClass="form-scroll">
+            <VBox spacing="24" styleClass="form-panel" maxWidth="450" alignment="TOP_CENTER">
+                
+                <ImageView fitHeight="100" fitWidth="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/imagen_clientes.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Añadir/Editar Cliente" styleClass="title"/>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="ID del Cliente" styleClass="field-label"/>
+                    <TextField fx:id="idField" promptText="Automático" styleClass="input"/>
+                </VBox>
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Nombre Completo" styleClass="field-label"/>
+                    <TextField fx:id="nameField" promptText="Ingrese nombre completo" styleClass="form-field"/>
+                </VBox>
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Email" styleClass="field-label"/>
+                    <TextField fx:id="emailField" promptText="correo@ejemplo.com" styleClass="form-field"/>
+                </VBox>
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Teléfono" styleClass="field-label"/>
+                    <TextField fx:id="phoneField" promptText="ej. 555-1234" styleClass="input"/>
+                </VBox>
+                <Label fx:id="errorLabel" styleClass="error"/>
+                <Separator styleClass="form-separator"/>
+                <Button fx:id="btnAdd" text="Añadir Cliente" onAction="#handleAddClient" styleClass="action-button"/>
+                <Button text="Actualizar" onAction="#handleUpdateClient" styleClass="action-button"/>
+                <Button text="Eliminar/Baja" onAction="#handleDeleteClient" styleClass="delete-button"/>
+            </VBox>
+        </ScrollPane>
+    </right>
+</BorderPane>

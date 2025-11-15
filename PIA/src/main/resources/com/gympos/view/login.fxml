@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
+fx:controller="com.gympos.controller.LoginController">
+    <center>
+        <StackPane styleClass="login-container" maxWidth="600" maxHeight="600">
+            <Pane styleClass="card-background"/>
+            <VBox spacing="24" alignment="CENTER" styleClass="card" maxWidth="450">
+                <Label text="Gym Point Of Sale" styleClass="title"/>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Usuario" styleClass="field-label"/>
+                    <TextField fx:id="usernameField" promptText="Ingrese su usuario" styleClass="input"/>
+                </VBox>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Contraseña" styleClass="field-label"/>
+                    <PasswordField fx:id="passwordField" promptText="Ingrese su contraseña" styleClass="form-field"/>
+                </VBox>
+                
+                <Button text="Ingresar" onAction="#onLogin" styleClass="action-button"/>
+                <Label fx:id="errorLabel" styleClass="error"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

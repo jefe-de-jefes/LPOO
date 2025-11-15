@@ -1,0 +1,9 @@
+/target/
+
+# Archvos IDE
+.project
+.classpath
+.settings
+
+# Archivos generados
+*reporte*

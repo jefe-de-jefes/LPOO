@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.gympos.controller.SistemaMembresiaController"
+            styleClass="root" stylesheets="@../css/app.css">
+    
+    <top>
+        <HBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
+            <Button text="&lt; Volver al Dashboard" onAction="#goToDashboard"/>
+            <Label text="Gestión de Membresías" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane styleClass="login-container" maxWidth="700" maxHeight="700">
+            <VBox spacing="24" alignment="CENTER" styleClass="card" maxWidth="450">
+                
+                <ImageView fitHeight="100" fitWidth="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/imagen_pagos.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Gestión de Membresías" styleClass="title"/>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="ID del Cliente" styleClass="field-label"/>
+                    <TextField fx:id="clientIdField" promptText="ej. C-001" styleClass="input"/>
+                </VBox>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Tipo de Membresía" styleClass="field-label"/>
+                    <ChoiceBox fx:id="membershipTypeBox" styleClass="input"/>
+                    <Label fx:id="priceLabel" styleClass="status-message" text="💰 Seleccione para ver precios"/>
+                </VBox>
+                
+                <HBox alignment="CENTER_LEFT">
+                    <CheckBox fx:id="usePointsCheck" text="Usar Puntos de Recompensa" styleClass="field-label"/>
+                </HBox>
+                
+                <Separator styleClass="form-separator"/>
+                
+                <Button fx:id="btnCreate" text="💳 Proceder al Pago" styleClass="action-button" disable="true" onAction="#handleCreateMembership"/>
+                
+                <Label fx:id="expiryLabel" styleClass="subtitle"/>
+                <Label fx:id="statusLabel" styleClass="error"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

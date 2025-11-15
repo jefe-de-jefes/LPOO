@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.gympos.controller.ControlAccesoController"
+            styleClass="root" stylesheets="@../css/app.css">
+    <top>
+        <HBox alignment="TOP_LEFT" spacing="10" style="-fx-padding: 10;">
+            <Button text="&lt; Volver al Dashboard" onAction="#goToDashboard"/>
+            <Label text="Control de Acceso" styleClass="title"/>
+        </HBox>
+    </top>
+
+    <center>
+        <StackPane styleClass="login-container" maxWidth="700" maxHeight="700">
+            <VBox spacing="24" alignment="CENTER" styleClass="card" maxWidth="450">
+                
+                <ImageView fitHeight="100" fitWidth="100" preserveRatio="true">
+                    <image>
+                        <Image url="@../images/imagen_acceso.png"/>
+                    </image>
+                </ImageView>
+
+                <Label text="Control de Acceso" styleClass="title"/>
+                
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="ID del Cliente" styleClass="field-label"/>
+                    <TextField fx:id="clientIdField" promptText="ej. C-001" styleClass="input"/>
+                </VBox>
+
+                <VBox spacing="5" alignment="CENTER_LEFT">
+                    <Label text="Seleccionar Clase (Opcional)" styleClass="field-label"/>
+                    <ComboBox fx:id="classSelector" promptText="Entrada General (Gym)" styleClass="input" maxWidth="Infinity"/>
+                </VBox>
+                
+                <HBox spacing="15" alignment="CENTER">
+                    <Button text="Registrar ENTRADA" onAction="#handleRegisterEntry" styleClass="entry-button"/>
+                    <Button text="Registrar SALIDA" onAction="#handleRegisterExit" styleClass="exit-button"/>
+                </HBox>
+                
+                <Label fx:id="statusLabel" styleClass="status-message" wrapText="true" textAlignment="CENTER"/>
+            </VBox>
+        </StackPane>
+    </center>
+</BorderPane>

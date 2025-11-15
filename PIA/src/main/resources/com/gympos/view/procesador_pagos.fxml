@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml" 
+            fx:controller="com.gympos.controller.ProcesadorPagosController"
+            styleClass="modal-overlay">
+    
+    <VBox spacing="20" alignment="CENTER" styleClass="modal-content">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Label text="Procesador de Pagos" styleClass="modal-title"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="✕" onAction="#handleClose" styleClass="close-button"/>
+        </HBox>
+        
+        <Separator styleClass="modal-separator"/>
+        
+        <VBox spacing="8" alignment="CENTER_LEFT" styleClass="info-section">
+            <Label text="Cliente" styleClass="section-title"/>
+            <HBox spacing="10">
+                <Label fx:id="clientIdLabel" styleClass="field-value"/>
+                <Label text="-" styleClass="field-value"/>
+                <Label fx:id="clientNameLabel" styleClass="field-value"/>
+            </HBox>
+        </VBox>
+        
+        <VBox spacing="8" alignment="CENTER_LEFT" styleClass="info-section">
+            <Label text="Detalles de Suscripción" styleClass="section-title"/>
+            <HBox spacing="10">
+                <Label text="Plan:" styleClass="field-label"/>
+                <Label fx:id="membershipTypeLabel" styleClass="field-value"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Precio Base:" styleClass="field-label"/>
+                <Label fx:id="basePriceLabel" styleClass="field-value"/>
+            </HBox>
+            <HBox spacing="10">
+                <Label text="Descuento:" styleClass="field-label"/>
+                <Label fx:id="discountLabel" styleClass="field-value"/>
+            </HBox>
+            <Label fx:id="vigenciaLabel" styleClass="field-value" style="-fx-font-size: 12px;"/>
+        </VBox>
+        
+        <VBox spacing="8" alignment="CENTER" styleClass="total-section">
+            <Label text="TOTAL A PAGAR" styleClass="total-label"/>
+            <Label fx:id="totalAmountLabel" styleClass="total-amount"/>
+        </VBox>
+        
+        <ChoiceBox fx:id="methodBox" styleClass="input" maxWidth="Infinity"/>
+        
+        <Label fx:id="statusLabel" styleClass="status-message" text="Seleccione método de pago"/>
+        
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Cancelar" onAction="#handleCancel" styleClass="cancel-button"/>
+            <Button text="Confirmar Pago" onAction="#handleProcessPayment" styleClass="action-button"/>
+        </HBox>
+    </VBox>
+</StackPane>

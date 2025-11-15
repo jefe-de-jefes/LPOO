@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.*?>
+
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="com.gympos.controller.DashboardController">
+    
+    <center>
+        <SplitPane dividerPositions="0.30">
+            <items>
+                <VBox spacing="15" alignment="TOP_CENTER" styleClass="sidebar" fillWidth="true">
+                    <padding>
+                        <Insets top="20" right="15" bottom="20" left="15"/>
+                    </padding>
+
+                    <ImageView fitHeight="120" fitWidth="120" preserveRatio="true">
+                        <image>
+                            <Image url="@../images/logo_principal.jpeg"/>
+                        </image>
+                    </ImageView>
+
+                    <Label text="Panel de Control" styleClass="title"/>
+                    <Separator styleClass="form-separator"/>
+
+                    <Button text="  Gestionar Clientes" onAction="#goToGestionClientes" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_clientes.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Gestionar Empleados" onAction="#goToGestionEmpleados" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/logo_principal.jpeg"/> 
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Gestionar Membresías" onAction="#goToSistemaMembresias" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_pagos.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Control de Acceso" onAction="#goToControlAcceso" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_acceso.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Generar Reportes" onAction="#goToGeneradorReportes" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_reportes.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Inventario" onAction="#goToInventario" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_inventario.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                    <Button text="  Calendario Clases" onAction="#goToCalendario" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_clases.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    
+                    <Button text="  Respaldo Manual" onAction="#handleManualBackup" styleClass="sidebar-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_backup.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                    
+                    <Region VBox.vgrow="ALWAYS"/>
+                    
+                    <Separator styleClass="form-separator"/>
+
+                    <Button text="  Cerrar Sesión" onAction="#handleLogout" styleClass="delete-button" maxWidth="Infinity" alignment="CENTER_LEFT">
+                        <graphic>
+                            <ImageView fitHeight="24" fitWidth="24" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/imagen_acceso.png"/>
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+
+                </VBox>
+
+                <StackPane styleClass="dashboard-content" style="-fx-background-color: #23272F;">
+                    <VBox spacing="40" alignment="CENTER">
+                        <ImageView fitHeight="300" fitWidth="300" preserveRatio="true" opacity="0.1">
+                            <image>
+                                <Image url="@../images/logo_principal.jpeg"/>
+                            </image>
+                        </ImageView>
+                        
+                        <VBox spacing="10" alignment="CENTER" styleClass="clock-container">
+                            <Label fx:id="timeLabel" styleClass="clock-time"/>
+                            <Label fx:id="dateLabel" styleClass="clock-date"/>
+                        </VBox>
+                    </VBox>
+                </StackPane>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
