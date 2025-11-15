@@ -14,7 +14,8 @@ public class Main{
         biblio.agregarLibro(new Libro1410(3, "Introduccion al Calculo I", "MATEMATICAS", 2005));
         biblio.agregarLibro(new Libro1410(4, "Cien Years de Soledad", "LITERATURA", 1967));
         biblio.agregarLibro(new Libro1410(5, "Astrologia y la Ciencia", "CIENCIA", 2020));
-        
+       
+        //Matriculas para que puedan registrar reservas de libros, no se pueden agregar desde el menu solo el admin puede agregar
         String miMatricula = "2177528"; 
         biblio.registrarUsuario(miMatricula, "Luis Segobia");
         biblio.registrarUsuario("9638527", "Juan Perez");
@@ -42,18 +43,16 @@ public class Main{
                                        "2. Gestion de reservas\n" +
                                        "3. Busqueda y filtrado\n" +
                                        "4. Ordenamiento\n" +
-                                       "5. Analisis de complejidad temporal\n" +
                                        "0. Salir\n" +
                                        "=============================================\n" +
                                        "Seleccione una opcion> ";
-                opcion = menu(menuPrincipal, new int[] {0,1,2,3,4,5});
+                opcion = menu(menuPrincipal, new int[] {0,1,2,3,4});
 
                 switch (opcion) {
                     case 1: crudLibrosMenu(biblioteca); break;
                     case 2: gestionReservas(biblioteca); break;
                     case 3: busquedaYFiltros(biblioteca); break; 
                     case 4: ordenamientoYComparators(biblioteca); break;
-                    case 5: analisisComplejidad(biblioteca); break;
                     case 0: print("\nSaliendo del Programa. Gracias por usar tu biblio de preferencia. Bye bye.");
                         break;
                     default:
@@ -70,6 +69,7 @@ public class Main{
 
     private static void crudLibrosMenu(BibliotecaL7528 biblio) {
         int opcion;
+        long inicio;
         do {
             cleaner();
             String menuCRUD = "\n--- CRUD DE LIBROS ---\n" +
@@ -77,7 +77,7 @@ public class Main{
                                     "2. Buscar libro por ID\n" +
                                     "3. Actualizar year de publicacion\n" +
                                     "4. Eliminar libro\n" +
-                                    "5. Avanzado: limpiar catalogo antiguo\n" +
+                                    "5. Limpiar catalogo antiguo\n" +
                                     "0. Volver al menu principal\n" + 
                                     "Seleccione una opcion> ";
             opcion = menu(menuCRUD, new int[] {0,1,2,3,4,5});
@@ -93,8 +93,10 @@ public class Main{
                         year = leer_entero("Year de publicacion> ", 1800, LocalDate.now().getYear());
                         
                         Libro1410 nuevo = new Libro1410(id, titulo, cat, year);
+                        inicio = System.nanoTime();
                         biblio.agregarLibro(nuevo); 
                         print("\nLibro agregado.");
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
@@ -102,8 +104,10 @@ public class Main{
                         cleaner();
                         print("\n**Busqueda de libro**");
                         id = leer_entero("Id del libro a buscar> ", 1, 99999999);
+                        inicio = System.nanoTime();
                         Libro1410 encontrado = biblio.buscarLibroPorId(id);
-                        print("\n" + encontrado != null ? "Encontrado: " + encontrado : "Libro no encontrado.");
+                        print("\n" + encontrado == null ? "Encontrado: " + encontrado : "Libro no encontrado.");
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
@@ -112,8 +116,10 @@ public class Main{
                         print("\n**Actualizar year de publicacion.**");
                         id = leer_entero("Id del libro a actualizar> ", 1, 99999999);
                         year = leer_entero("Nuevo year de publicacion> ", 1800, LocalDate.now().getYear());
+                        inicio = System.nanoTime();
                         boolean actualizado = biblio.actualizarYearLibro(id, year);
                         print("\n" + (actualizado ? "Year actualizado." : "ID no encontrado."));
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
@@ -121,16 +127,20 @@ public class Main{
                         cleaner();
                         print("\n**Eliminar libro**");
                         id = leer_entero("Id del libro a eliminar> ",  1, 99999999);
+                        inicio = System.nanoTime();
                         boolean eliminado = biblio.eliminarLibro(id);
                         print("\n" + (eliminado ? "Libro eliminado." : "ID no encontrado."));
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
                     case 5: 
                         int yearLimite = leer_entero("Introduzca el a partir de que year desea conservar los libros (se eliminaran los demas)> ", 1801, LocalDate.now().getYear());
                         print("\nEliminando libros publicados antes de " + yearLimite + "...");
+                        inicio = System.nanoTime();
                         int count = biblio.limpiarCatalogoAntiguo(yearLimite); 
-                        print("\nSe eliminaron " + count + " libros antiguos. (Manejo de Iteradores)");
+                        print("\nSe eliminaron " + count + " libros antiguos.");
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                 }
@@ -144,6 +154,7 @@ public class Main{
     
     private static void gestionReservas(BibliotecaL7528 biblio) {
         int opcion;
+        long inicio;
         do {
             cleaner();
             String menuReserva = "\n--- GESTION DE RESERVAS ---\n" +
@@ -159,27 +170,35 @@ public class Main{
                 String matricula;
                 switch (opcion) {
                     case 1: 
-                        matricula = leer_string("Ingrese la matricula del usuario a reservar> ", 7, 7, true);
+                        matricula = leer_string("Ingrese la matricula del usuario a reservar (las matriculas solo pueden ser vistas desde el codigo)> ", 7, 7, true);
+                        inicio = System.nanoTime();
                         biblio.registrarReserva(matricula); 
                         print("Reserva registrada. Se agrego al final de la cola.");
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
 
                     case 2: 
+                        inicio = System.nanoTime();
                         matricula = biblio.obtenerProximaReserva();
                         print("\nProxima matricula en la cola: " + 
                               (matricula != null ? matricula : "La cola de reservas esta vacia."));
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
 
                     case 3:
+                        inicio = System.nanoTime();
                         String procesado = biblio.procesarSiguienteReserva();
                         print("\nReserva atendida:\n" + procesado);
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
 
                     case 4: 
+                        inicio = System.nanoTime();
                         print("\nReservas pendientes: " + biblio.contarReservas());
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                 }
@@ -195,6 +214,7 @@ public class Main{
     
     private static void busquedaYFiltros(BibliotecaL7528 biblio) {
         int opcion;
+        long inicio;
         do{
             cleaner();
             String menuBusqueda =  "---- BUSQUEDA Y FILTROS ----\n" +
@@ -208,14 +228,18 @@ public class Main{
             try {
                 switch (opcion) {
                     case 1:
+                        inicio = System.nanoTime();
                         Set<String> categorias = biblio.getCategoriasUnicas(); 
                         print("\nCategorias unicas registradas:\n" + categorias);
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
                     case 2:
+                        inicio = System.nanoTime();
                         String tituloMasAntiguo = biblio.obtenerLibroMasAntiguo();
                         print("\nLibro mas antiguo: " + tituloMasAntiguo);
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                         
@@ -224,6 +248,7 @@ public class Main{
                         
                         Categorias cat = Categorias.valueOf(catStr); 
                         
+                        inicio = System.nanoTime();
                         List<Libro1410>filtrados = biblio.filtrarLibrosPorCategoria(cat); 
                         
                         if (filtrados.isEmpty()) {
@@ -232,6 +257,7 @@ public class Main{
                             print("\nLibros encontrados (" + catStr + "):");
                             filtrados.forEach(l -> print("   - " + l));
                         }
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
                 }
@@ -250,6 +276,7 @@ public class Main{
 
     private static void ordenamientoYComparators(BibliotecaL7528 biblio) {
         int opcion = -1;
+        long inicio;
 
         do {
             cleaner();
@@ -265,15 +292,19 @@ public class Main{
                 switch (opcion) {
                     case 1:
                         print("\n--- Libros ordenados por titulo ---");
+                        inicio = System.nanoTime();
                         biblio.obtenerLibrosOrdenadosPorTitulo()
-                              .forEach(l -> print("\n   - " + l.getTitulo()));
+                              .forEach(l -> print("\n" + l.getId() + "   - " + l.getTitulo()));
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
 
                     case 2:
                         print("\n--- Libros ordenados por year descendente ---");
+                        inicio = System.nanoTime();
                         biblio.obtenerLibrosOrdenadosPorYearDesc()
                               .forEach(l -> print("\n   - " + l.getYearPublicacion() + " - " + l.getTitulo()));
+                        MedidorTiempo.medirTiempo(inicio);
                         pausar();
                         break;
 
@@ -292,50 +323,4 @@ public class Main{
         } while (opcion != 0);
     }
 
-
-    private static void analisisComplejidad(BibliotecaL7528 biblio) {
-        int opcion = -1;
-
-        do {
-            cleaner();
-            try {
-                String menuComplejidad = "\n--- ANALISIS DE TIEMPO ---\n" +
-                                         "1. Busqueda por ID O(n)\n" +
-                                         "2. Registro de Usuario O(1)\n" +
-                                         "0. Volver al menu principal\n" +
-                                         "Seleccione una opcion> ";
-
-                opcion = menu(menuComplejidad, new int[]{0,1,2});
-
-                switch (opcion) {
-                    case 1:
-                        print("\n\n--- Busqueda lineal por id ---");
-                        int idBuscado = leer_entero("Introduzca el id del libro a buscar> ", 1, 99999999);
-                        biblio.medirTiempoBusqueda(idBuscado); 
-                        pausar();
-                        break;
-
-                    case 2:
-                        print("\n\n--- Registro de usuario ---");
-                        String matricula = leer_string("Matricula> ", 7, 7, true);
-                        String nombreInput = leer_string("Nombre de usuario> ", 3, 256, false);
-                        String nombre = validarName(nombreInput, 3, 256);
-                        biblio.medirTiempoRegistroUsuario(matricula, nombre);
-                        pausar();
-                        break;
-
-                    case 0:
-                        print("\n\nVolviendo al menu principal...");
-                        break;
-
-                    default:
-                        print("\nOpcion no valida. Intente de nuevo.");
-                }
-            } catch (Exception e) {
-                System.err.println("ERROR INESPERADO: " + e.getMessage());
-                pausar();
-            }
-        } while (opcion != 0);
-        
-    }
 }

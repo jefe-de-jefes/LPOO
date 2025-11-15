@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import java.util.Iterator;
 import java.util.Collections;
 import java.util.Comparator;
-import java.time.Duration; 
 
 public class BibliotecaL7528 { 
     
@@ -77,6 +76,7 @@ public class BibliotecaL7528 {
         while (it.hasNext()) {
             Libro1410 libro = it.next();
             if (libro.getYearPublicacion() < yearLimite) {
+                print("Libro> " + libro.getTitulo());
                 it.remove();
                 eliminados++;
             }
@@ -125,25 +125,7 @@ public class BibliotecaL7528 {
         return listaOrdenada;
     }
 
-    public void medirTiempoBusqueda(int idBuscado) {
-        long inicio = System.nanoTime();
-        buscarLibroPorId(idBuscado);
-        long fin = System.nanoTime();
-        
-        Duration duracion = Duration.ofNanos(fin - inicio);
-        print("Tiempo de busqueda lineal: " + duracion.toNanos() + " microsegundos");
-    }
-    
-    public void medirTiempoRegistroUsuario(String matricula, String nombre) {
-        long inicio = System.nanoTime();
-        registrarUsuario(matricula, nombre);
-        long fin = System.nanoTime();
-
-        Duration duracion = Duration.ofNanos(fin - inicio);
-        print("Tiempo de registro: "+ duracion.toNanos() + " nanosegundos%n");
-    }
-
-    public void registrarUsuario(String matricula, String nombre) {
+     public void registrarUsuario(String matricula, String nombre) {
         if(!validar_long_str(matricula, 7, 7, true)){
             print("**Matricula no valida**");
             return;

@@ -1,0 +1,63 @@
+*****Análisis de Rendimiento y Logs de Ejecución*****
+
+El análisis de los logs confirma el correcto funcionamiento de los mecanismos de sincronización y la gestión eficiente de los hilos.
+
+Prueba de Integridad de Datos (Simulador de Banco)
+
+El Simulador de Banco fue sometido a competencia por tres hilos (ATM-1, Cliente-Aldo, y Cliente-Beto). El objetivo era demostrar que las transacciones (la suma de débitos y créditos) no se perdieran debido a Race Conditions.
+Operación	Transacciones Netas	Saldo Final Esperado
+Inicial		$1000.00
+Cajero (ATM-1)	+300 - 100	+ $200.00
+Cliente 1 y 2	2 * (-50 - 25 + 100)	+ $50.00
+Total		$1250.00
+
+Resultado del Log: El saldo final real fue de $1250.00.
+
+Conclusión: La coincidencia perfecta del saldo prueba que el mecanismo synchronized en la clase CuentaBancaria funcionó correctamente. Se garantizó que cada operación (lectura, modificación, escritura) fuera atómica, impidiendo que el trabajo de un hilo fuera sobrescrito por otro.
+
+Prueba de Coordinación de Hilos (Productor-Consumidor)
+
+El log de ejecución demostró que la coordinación entre Productores y Consumidores fue eficiente, evitando el busy waiting.
+
+    Evidencia de wait(): Se observaron mensajes en el log donde los hilos indicaban "ESPERA" (ej., [P] Buffer Segobia lleno. Productor-X ESPERA.), lo cual significa que el hilo liberó el lock del buffer y entró en estado de suspensión.
+
+    Eficiencia: Esto confirma que el sistema no consumió ciclos de CPU innecesariamente, sino que solo fue reactivado por el uso de notifyAll() cuando la condición (espacio disponible o ítem presente) cambió.
+
+Análisis de Gestión y Reutilización de Hilos (Pools)
+
+El log de los Thread Pools (tanto el personalizado como el ExecutorService) demostró el principio de la reutilización de hilos.
+
+    Evidencia: Las 5 tareas enviadas al ThreadPoolSegobia fueron procesadas exclusivamente por los dos hilos Worker (PoolWorker-0 y PoolWorker-1).
+
+    Conclusión: Esta reutilización reduce drásticamente el overhead de la JVM y el sistema operativo, validando la superioridad de los Thread Pools sobre la creación de un nuevo hilo (new Thread()) por cada tarea.
+
+
+
+*****Documentación sobre Estrategias de Sincronización*****
+
+Estrategia 1: Exclusión Mutua (synchronized)
+
+Módulo	Concepto Clave
+CuentaBancaria	Atomicidad y Sección Crítica
+
+Uso: El synchronized se usa para asegurar que un bloque de código (o un método entero) sea ejecutado por un solo hilo a la vez. En la CuentaBancaria, resuelve el problema fundamental de la concurrencia: la modificación insegura de variables compartidas.
+
+Estrategia 2: Coordinación por Condición (wait() y notifyAll())
+
+Módulo	Concepto Clave
+BufferSegobia<T>	Espera Pasiva y Comunicación
+
+Uso: Estos métodos se utilizan dentro de bloques synchronized para coordinar la actividad basada en una condición:
+
+    wait(): Libera el lock del monitor y pone al hilo en estado de suspensión hasta que es notificado.
+
+    notifyAll(): Se utiliza para notificar a todos los hilos que esperan sobre el monitor que la condición ha cambiado. Esta es la base de la comunicación eficiente entre los productores y consumidores.
+
+Estrategia 3: Manejo de Bloqueos y Ciclo de Vida (Deadlock)
+
+Módulo	Concepto Clave
+Demo de Deadlock	Espera Circular y Hilos Demonio
+
+Deadlock (Bloqueo Mutuo): Ocurre cuando se da una Espera Circular (el Hilo T1 espera el Recurso B, que lo tiene el Hilo T2, mientras T2 espera el Recurso A, que lo tiene T1).
+
+Solución Implementada: Para evitar que el programa se colgara indefinidamente, los hilos de la demostración de Deadlock se marcaron como Hilos Demonio (t.setDaemon(true)). Esta es una técnica para hilos de soporte, que permite que la Máquina Virtual de Java (JVM) se cierre y termine automáticamente los hilos bloqueados una vez que el hilo principal (main) ha finalizado su ejecución.

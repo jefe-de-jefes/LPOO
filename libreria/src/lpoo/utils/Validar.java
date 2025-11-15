@@ -15,7 +15,7 @@ public static String normalName(String texto) {
 
     return temp.trim();
 }
-    private static boolean validar_entero(String numero){
+    public static boolean validar_entero(String numero){
         try{
             Integer.parseInt(numero);
             return true;
@@ -73,6 +73,16 @@ public static String normalName(String texto) {
         return entrada;
     }
 
+    public static boolean validarEmail(String email) {
+        if (email == null || email.trim().isEmpty()) return false;
+        String regex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$";
+        return email.matches(regex);
+    }
+    
+    public static boolean validarMatricula(String matricula) {
+        if (matricula == null || matricula.isBlank()) return false; 
+        return matricula.matches("\\d{7}");  
+    }
     public static String validarName(String nombre, int minLong, int maxLong) {
         if (nombre == null || nombre.trim().isBlank()) {
             throw new IllegalArgumentException("**La entrada no puede ser nula ni vacia**");
