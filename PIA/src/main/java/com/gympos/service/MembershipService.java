@@ -100,19 +100,15 @@ public class MembershipService {
         Threading.submitTask(() -> {
             while (true) {
                 try {
-                    Thread.sleep(3600000); 
+                    // Revisar cada hora para no saturar la consola
+                    Thread.sleep(3600000);
                     List<Membership> expiring = getExpiringMemberships(7);
-                    
-                    if (!expiring.isEmpty()) {
-                        javafx.application.Platform.runLater(() -> {
-                            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
-                            alert.setTitle("Alertas de Vencimiento");
-                            alert.setHeaderText("Membresías por vencer pronto");
-                            alert.setContentText("Se detectaron " + expiring.size() + " membresías próximas a vencer.");
-                            alert.show();
-                        });
+                    for (Membership membership : expiring) {
+                        System.out.println("AVISO: Membresía por vencer - Cliente: " + membership.getClientId());
                     }
-                } catch (InterruptedException e) { break; }
+                } catch (InterruptedException e) {
+                    break;
+                }
             }
         });
     }
